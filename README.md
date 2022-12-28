@@ -13,9 +13,3 @@ dependencies:
 * xlib header files
 
 * gcc ig
-
-to build:
-
-```
-gcc xconfigurewindow-testwindow.c -o xconfigurewindow-testwindow -lX11 -lm
-```
