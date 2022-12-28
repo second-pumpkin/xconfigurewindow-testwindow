@@ -135,8 +135,7 @@ void onMapNotify(XEvent* e) {
 	if (e->xmap.window != app.window) return;
 
 	// draw the buttons
-	drawFrame();
-	
+	drawFrame();	
 }
 
 void onConfigureNotify(XEvent* e) {
@@ -164,11 +163,13 @@ void onConfigureNotify(XEvent* e) {
 	else
 		app.knownPosition = false;
 
-	// if the size changed, reposition and redraw the buttons
+	// if the size changed, reposition the buttons
 	if (sizeChanged) {
 		if (!app.fixedButtonPositions) repositionButtons();
-		drawFrame();
 	}
+		
+	// redraw the frame
+	drawFrame();
 }
 
 void drawFrame() {
@@ -205,6 +206,12 @@ void drawFrame() {
 		drawButton(button, false);
 		button = button->next;
 	}
+
+	// draw text stating the window's believed geometry in the corner
+	XSetForeground(dpy, app.gc, B_TEXT_COLOR);
+	char geometryString[64];
+	sprintf(geometryString, "Current geometry: %d %d / %d %d", app.x, app.y, app.w, app.h);
+	XDrawString(dpy, app.window, app.gc, 10, 30, geometryString, strlen(geometryString));
 }
 
 void drawButton(Button* button, bool pressed) {
