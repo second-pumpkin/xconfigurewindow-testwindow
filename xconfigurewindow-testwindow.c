@@ -320,10 +320,9 @@ void repositionButtons() {
 			XMoveWindow(dpy, button->window, button->x, button->y);
 
 			if (button->next) button = button->next;
-			else goto exit_reposition_loop;
+			else return;
 		}
 	}
-	exit_reposition_loop:
 }
 
 Button* getButton(Window window) {
